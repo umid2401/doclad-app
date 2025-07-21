@@ -1,0 +1,354 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Rimma";
+    src: url("../../public/rimma-sans-bold.ttf");
+}
+
+.main_section {
+    max-width: 480px;
+    overflow-x: hidden !important;
+    position: relative;
+    margin: 0 auto;
+}
+
+.section {
+    background-repeat: no-repeat;
+    background-color: #000000;
+    background-size: 100%;
+    width: 100%;
+    position: relative;
+    background-position: center;
+    overflow: hidden;
+
+}
+
+.section_one {
+    background-image: url("/images/chiziq.png"),
+        url("/images/sect_1.png");
+    background-size: cover, 100%;
+    background-position: center, bottom;
+    height: var(--app-height);
+    overflow: hidden !important;
+    height: 100dvh;
+
+}
+
+.section_two {
+    background-image: url("/images/chiziq.png"),
+        url("/images/sect_2.png");
+    background-size: cover, 100%;
+    background-position: center, top center;
+    height: 100dvh;
+
+}
+
+.section_three {
+    background-image: url("/images/chiziq.png"),
+        url("/images/sect_3.png");
+    background-size: cover, 100%;
+    background-position: center, center bottom;
+    display: flex;
+    align-items: end;
+    height: 95dvh;
+
+
+}
+
+.top {
+    width: 100%;
+    height: var(--app-height);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 33 !important;
+}
+
+.top img {
+    width: 100%;
+    object-position: 0 -18dvh;
+    object-fit: cover;
+}
+
+.bottom {
+    margin: 0 auto;
+    width: 90%;
+    position: absolute;
+    top: 60dvh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 34 !important;
+
+}
+
+.text_content {
+    background: linear-gradient(92deg, #21CD5A -9.2%, #FFF 98.62%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+
+.smart_text {
+    color: #21CD5A;
+    font-size: 59.689px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 83.662%;
+    letter-spacing: 2.388px;
+    text-transform: uppercase;
+    font-family: "Rimma" !important;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    text-indent: 30px;
+    position: relative;
+}
+
+.smart_text span {
+    color: #FFFFFF;
+}
+
+.smart_text .strong {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    right: 0px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    margin-left: 10px;
+    bottom: 50%;
+    right: 0;
+    transform: translateY(75%);
+}
+
+.strong img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bottom_title {
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 13.43px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 110%;
+    /* 69.3px */
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+.load {
+    width: 80px;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.my_span1 {
+    color: #21CD5A;
+    vertical-align: baseline;
+
+}
+
+.content_top {
+    width: 100%;
+    height: var(--app-height);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 33 !important;
+}
+
+.content_top img {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0 -5dvh;
+}
+
+.content_bottom {
+    position: relative;
+    z-index: 34 !important;
+    display: flex;
+    width: 85%;
+    height: 100.668px;
+    transform: rotate(3.044deg);
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 23.023px;
+    backdrop-filter: blur(3.7838826179504395px);
+    border-radius: 23.023px;
+    background-image: url("/images/bg2.png");
+    background-size: 125%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: 25dvh;
+    left: 20px;
+    padding: 0 20px;
+}
+
+.content_bottom::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    /* border qalinligi */
+    background: linear-gradient(to right, #FFFFFF, #21CD5A);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+.content_bottom p {
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 11.725px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 110%;
+    /* 12.897px */
+    text-transform: uppercase;
+}
+
+.content_bottom p .content_span {
+    color: #DE2C05;
+
+}
+
+
+.item {
+    display: flex;
+    gap: 0px;
+    align-items: end;
+
+}
+
+.item .box {
+    position: relative;
+    display: flex;
+    align-items: end;
+}
+
+.blik {
+    width: 100px;
+    height: 100px;
+    animation: spin 3s linear infinite;
+    transform-origin: center center;
+    position: absolute;
+    bottom: -20px;
+    left: -10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.item .box .plus {
+    width: 40px;
+    height: 35px;
+    z-index: 2;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+
+}
+
+.smart p span {
+    color: #21CD5A;
+}
+
+.section_top {
+    width: 100%;
+    height: var(--app-height);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 33 !important;
+}
+
+.section_top img {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0 -27dvh;
+}
+
+.section_bottom {
+    position: relative;
+    z-index: 34 !important;
+    padding-bottom: 30px;
+}
+
+.section_bottom .description {
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 12.364px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 110%;
+    width: 90%;
+    margin: 0 auto;
+    /* 13.601px */
+    text-transform: uppercase;
+    margin-bottom: 50px;
+}
+
+.span2 {
+    color: #21CD5A;
+}
+
+.link {
+    width: 90%;
+    margin: 0 auto;
+    text-decoration: none;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid red; */
+    font-size: 17px;
+    color: #000000;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 3px;
+    font-style: italic;
+    height: 60px;
+    background: #21CD5A;
+    border-radius: 30px;
+    background: rgba(33, 205, 90, 1);
+    box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 0.46);
+    position: relative;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.link .bil {
+    width: 320px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* .red {
+    color: #DE2C05 !important;
+} */
