@@ -205,7 +205,7 @@
     border-radius: 20px;
     padding: 2px;
     /* border qalinligi */
-    background: linear-gradient(to right, #FFFFFF, #21CD5A);
+    background: linear-gradient(to right, #FFFFFF, #DE2C05);
     -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
