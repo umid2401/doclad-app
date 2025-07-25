@@ -59,7 +59,8 @@ function SmartMoneySlider() {
       </section>
       <section className="section_three section">
         <div className="section_top">
-          <img src="/images/section_3_front.png" alt="Section front 2" />        </div>
+          <img src="/images/section_3_front.png" alt="Section front 2" />
+          </div>
         <div className="section_bottom">
           <p className='description'>Это не разовое обучение, а <span className="span2">пожизненное сопровождение</span>  и <span className="span2">готовые сетапы</span> для торговли на каждый день!</p>
           <Link className='link' to="/courses">
