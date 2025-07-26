@@ -55,7 +55,7 @@ function SmartMoneySlider() {
           <img src="/images/sect.png" alt="Section front 2" />
         </div>
         <div className="content_bottom">
-          <img src="../../public/images/шв ред 1.png" className='red_rubl' alt="red_rubl" />
+          <img src="/images/шв ред 1.png" className='red_rubl' alt="red_rubl" />
           <p>Это не очередной курс по трейдингу,
             а логичная <span className="content_span">пошаговая инструкция</span> —
             для торговли вместе с крупными
