@@ -17,40 +17,45 @@ function SmartMoneySlider() {
 
   const handleScroll = () => {
     console.log("salom")
-  sectionTwoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-};
+    sectionTwoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <main className='main_section'>
       <section className="section_one section">
-        <div className="top">
-          <img  src="/images/section_1_front.png" alt="" />
-        </div>
-        <div className="bottom">
-          <h2 className='smart_text'>
-            <span>Smart </span>
-            Money 
-            <div className="strong">
 
-            <img src="/images/Group 3(1).png" alt="Er" className="strong1" />
-            </div>
-          </h2>
-          <p className='bottom_title'>
-            <span className="my_span1">
-              Научись
-            </span> смотреть на график и видеть ситуации для <span className="my_span1">заработка</span>, а не шум и манипуляции!
-          </p>
-          <img onClick={handleScroll} src="/images/load.png" alt="Load image" className="load" />
-          <p className="text_content">
-            Прокрутите страницу, чтобы продолжить
-          </p>
+        <div className="top">
+          <img src="/images/section_1_front.png" alt="Error" />
+          <div className="bottom">
+            <h2 className='smart_text'>
+              <span>Smart </span>
+              Money
+              <div className="strong">
+
+                <img src="/images/Group 3(1).png" alt="Er" className="strong1" />
+              </div>
+            </h2>
+            <p className='bottom_title'>
+              <span className="my_span1">
+                Научись
+              </span> смотреть на график и видеть ситуации для <span className="my_span1">заработка</span>, а не шум и манипуляции!
+            </p>
+            <img onClick={handleScroll} src="/images/load.png" alt="Load image" className="load" />
+            <p className="text_content">
+              Прокрутите страницу, чтобы продолжить
+            </p>
+          </div>
         </div>
+
+
+
       </section>
       <section ref={sectionTwoRef} className="section_two section">
         <div className="content_top">
-          <img src="/images/section_2_front.png" alt="Section front 2" />
+          <img src="/images/sect.png" alt="Section front 2" />
         </div>
         <div className="content_bottom">
+          <img src="../../public/images/шв ред 1.png" className='red_rubl' alt="red_rubl" />
           <p>Это не очередной курс по трейдингу,
             а логичная <span className="content_span">пошаговая инструкция</span> —
             для торговли вместе с крупными
@@ -60,7 +65,7 @@ function SmartMoneySlider() {
       <section className="section_three section">
         <div className="section_top">
           <img src="/images/section_3_front.png" alt="Section front 2" />
-          </div>
+        </div>
         <div className="section_bottom">
           <p className='description'>Это не разовое обучение, а <span className="span2">пожизненное сопровождение</span>  и <span className="span2">готовые сетапы</span> для торговли на каждый день!</p>
           <Link className='link' to="/courses">

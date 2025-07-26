@@ -8,6 +8,12 @@
     font-family: "Rimma";
     src: url("../../public/rimma-sans-bold.ttf");
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: scroll;
+  height: 100%;
+}
 
 .main_section {
     max-width: 480px;
@@ -31,10 +37,10 @@
     background-image: url("/images/chiziq.png"),
         url("/images/sect_1.png");
     background-size: cover, 100%;
-    background-position: center, bottom;
-
+    background-position: center, center -100px;
     height: 100dvh;
-    
+    position: relative;
+    overflow: hidden !important;
 
 }
 
@@ -44,6 +50,11 @@
     background-size: cover, 100%;
     background-position: center, top center;
     height: 740px;
+    position: relative;
+    margin-top: -100px;
+    top: 100px;
+    z-index: 102 !important;
+    overflow: auto;
 
 }
 
@@ -55,18 +66,18 @@
     display: flex;
     align-items: end;
     height: 720px;
-
+    position: relative;
+    z-index: 100 !important;
+    
 
 }
 
 .top {
     width: 100%;
     height: 100%;
-    position: absolute;
     transform: translateY(-30px);
-    left: 0;
-    bottom: 0 !important;
-    z-index: 33 !important;
+    /* z-index: 33 !important; */
+    position: relative;
 }
 
 .top img {
@@ -79,10 +90,10 @@
     margin: 0 auto;
     width: 90%;
     position: absolute;
-    bottom: 0%;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 34 !important;
+    z-index: 100 !important;
 
 }
 
@@ -147,7 +158,7 @@
 }
 
 .load {
-    width: 80px;
+    width: 80px !important;
     display: block;
     margin: 0 auto;
     cursor: pointer;
@@ -172,7 +183,7 @@
     width: 100%;
     object-fit: cover;
     height: 100%;
-    object-position: center -5dvh;
+    object-position: bottom 20px;
 }
 
 .content_bottom {
@@ -192,9 +203,17 @@
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;
-    bottom: 195px;
+    bottom: 160px;
     left: 20px;
     padding: 0px 20px;
+}
+.red_rubl{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateY(50%);
+    width: 90px;
+    z-index: 102;
 }
 
 .content_bottom::before {
@@ -369,7 +388,7 @@
  }
  @media screen and (min-width:400px){
     .content_bottom{
-        bottom: 22%;
+        bottom: 20%;
     }
  }
  @media screen and (min-width:428px){
