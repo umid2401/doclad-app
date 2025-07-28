@@ -9,7 +9,7 @@ export default function ScrollToTop() {
   useEffect(() => {
     // DOM to‘liq render bo‘lgandan keyin scroll qilish
     requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     });
   }, [pathname]);
 
