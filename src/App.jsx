@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import MainLayout from "./layouts/MainLayout"
 import TrainLayout from "./layouts/TrainLayout"
 import { useEffect } from "react";
@@ -29,13 +29,13 @@ function App() {
 
   return (
     
-     <>
+     <BrowserRouter>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainLayout />} />
         <Route path="/courses" element={<TrainLayout />} />
       </Routes>
-    </>
+    </BrowserRouter>
   )
 }
 

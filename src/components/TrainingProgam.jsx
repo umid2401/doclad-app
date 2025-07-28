@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/TrainingProgram.css';
+import { useLocation } from 'react-router-dom';
 
 
 
 
 const TrainingProgram = () => {
-	const RUB_PRICE = 50000;
-	const [usdPrice, setUsdPrice] = useState(null);
-	useEffect(() => {
+    const RUB_PRICE = 50000;
+    const [usdPrice, setUsdPrice] = useState(null);
+    useEffect(() => {
         const fetchUsdRate = async () => {
             try {
                 const res = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
@@ -27,96 +28,114 @@ const TrainingProgram = () => {
     }, []);
     const textRef = useRef(null);
     const programRef = useRef(null);
-const formatRef = useRef(null);
-const priceRef = useRef(null);
-const startRef = useRef(null);
-const navRef = useRef(null);
-const itemRefs = useRef({});
-const containerRef = useRef(null);
-
-const [navHeight, setNavHeight] = useState(0);
-const [bgLeft, setBgLeft] = useState(0);
-const [bgWidth, setBgWidth] = useState(0);
-const [activeSection, setActiveSection] = useState("program");
-
-// Navbar balandligi
-useEffect(() => {
-  if (navRef.current) {
-    setNavHeight(navRef.current.getBoundingClientRect().height);
-  }
-}, []);
-
-// Scroll to va indikatorni siljitish
-const scrollTo = (ref, sectionName) => {
-  if (ref.current) {
-    const top = ref.current.getBoundingClientRect().top + window.scrollY - navHeight - 30;
-    window.scrollTo({ top, behavior: "smooth" });
-
-    // scroll tugaganidan keyin activeSection va moveBackground
-    setTimeout(() => {
-      setActiveSection(sectionName);
-      moveBackground(sectionName);
-    }, 500); // scroll tugashi uchun vaqt (100% aniqlik uchun 400-600ms optimal)
-  } else {
-    console.warn("Ref ishlamayapti:", sectionName);
-  }
-};
+    const formatRef = useRef(null);
+    const priceRef = useRef(null);
+    const startRef = useRef(null);
+    const navRef = useRef(null);
+    const itemRefs = useRef({});
+    const containerRef = useRef(null);
+    const [isScrolling, setIsScrolling] = useState(false);
 
 
+    const [navHeight, setNavHeight] = useState(0);
+    const [bgLeft, setBgLeft] = useState(0);
+    const [bgWidth, setBgWidth] = useState(0);
+    const [activeSection, setActiveSection] = useState("program");
+    const location = useLocation()
+    // Navbar balandligi
+    useEffect(() => {
+        if (navRef.current) {
+            setNavHeight(navRef.current.getBoundingClientRect().height);
+        }
+    }, []);
+    useEffect(()=>{
+        if(location.pathname==="/courses"){
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            console.log(location);
+            
+        }
+    }, [])
 
-// Backgroundni harakatlantirish
-const moveBackground = (sectionName) => {
-  const el = itemRefs.current[sectionName];
-  if (el) {
-    const { offsetLeft, offsetWidth } = el;
-    setBgLeft(offsetLeft);
-    setBgWidth(offsetWidth);
-  }
-};
+    // Scroll to va indikatorni siljitish
+    const scrollTo = (ref, sectionName) => {
+        console.log(ref.current);
 
-// Boshlang'ich joy
-useEffect(() => {
-  moveBackground(activeSection);
-}, [navHeight]);
+        if (ref.current) {
+            setIsScrolling(true);
+            const top = ref.current.getBoundingClientRect().top + window.scrollY - navHeight - 30;
+            window.scrollTo({ top, behavior: "smooth" });
 
-// Scroll bilan aktiv bo‘limni aniqlash
-useEffect(() => {
-  const handleScroll = () => {
-    const sections = [
-      { ref: programRef, name: "program" },
-      { ref: formatRef, name: "format" },
-      { ref: priceRef, name: "price" },
-      { ref: startRef, name: "start" },
-    ];
+            // scroll tugaganidan keyin activeSection va moveBackground
+            setTimeout(() => {
+                setIsScrolling(false); 
+                setActiveSection(sectionName);
+                moveBackground(sectionName);
+            }, 500); // scroll tugashi uchun vaqt (100% aniqlik uchun 400-600ms optimal)
+        } else {
+            console.log("Ref ishlamayapti:", sectionName);
+        }
+    };
 
-    let current = activeSection;
 
-    for (let i = 0; i < sections.length; i++) {
-      const { ref, name } = sections[i];
-      const el = ref.current;
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= navHeight + 80 && rect.bottom > navHeight + 80) {
-          current = name;
-          break;
+
+    // Backgroundni harakatlantirish
+    const moveBackground = (sectionName) => {
+        const el = itemRefs.current[sectionName];
+        if (el) {
+            const { offsetLeft, offsetWidth } = el;
+            setBgLeft(offsetLeft);
+            setBgWidth(offsetWidth);
+        }
+    };
+
+    // Boshlang'ich joy
+    useEffect(() => {
+        moveBackground(activeSection);
+    }, [navHeight]);
+
+    // Scroll bilan aktiv bo‘limni aniqlash
+   useEffect(() => {
+  const timer = setTimeout(() => {
+    const handleScroll = () => {
+         if (isScrolling) return; 
+      const sections = [
+        { ref: programRef, name: "program" },
+        { ref: formatRef, name: "format" },
+        { ref: priceRef, name: "price" },
+        { ref: startRef, name: "start" },
+      ];
+
+      let current = activeSection;
+
+      for (let i = 0; i < sections.length; i++) {
+        const { ref, name } = sections[i];
+        const el = ref.current;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= navHeight + 80 && rect.bottom > navHeight + 80) {
+            current = name;
+            break;
+          }
         }
       }
-    }
 
-    if (current !== activeSection) {
-      setActiveSection(current);
-      moveBackground(current);
-    }
+      if (current !== activeSection) {
+        setActiveSection(current);
+        moveBackground(current);
+      }
 
-    // scroll bo'lganini ko'rsatish uchun klass
-    if (containerRef.current) {
-      containerRef.current.classList.toggle("scrolled", window.scrollY > 10);
-    }
-  };
+      if (containerRef.current) {
+        containerRef.current.classList.toggle("scrolled", window.scrollY > 10);
+      }
+    };
 
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, 100); // ← sahifa yuklangach 100ms kutib ishga tushadi
+
+  return () => clearTimeout(timer);
 }, [navHeight, activeSection]);
+
 
 
 
@@ -185,15 +204,15 @@ useEffect(() => {
                     </div>
 
                     <ul className="training-program__list">
-                        <li>ЧТО ТАКОЕ <span class="highlight">ФРАКТАЛ.</span></li>
-                        <li>ЧТО ТАКОЕ <span class="highlight">SWING-ДВИЖЕНИЕ.</span></li>
-                        <li>ЧТО ТАКОЕ <span class="highlight">PREMIUM И DISCOUNT.</span></li>
-                        <li>ИЗ ЧЕГО СОСТОИТ <span class="highlight premium2">PREMIUM </span> И <span class="highlight premium3">DISCOUNT.</span></li>
-                        <li>ЛОГИКА РАБОТЫ <span class="highlight premium2">PREMIUM </span> И <span class="highlight premium3">DISCOUNT.</span></li>
-                        <li>ПРИМЕРЫ РАБОТЫ С <span class="highlight premium2">PREMIUM </span> И <span class="highlight premium3">DISCOUNT.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">ФРАКТАЛ.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">SWING-ДВИЖЕНИЕ.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">PREMIUM И DISCOUNT.</span></li>
+                        <li>ИЗ ЧЕГО СОСТОИТ <span className="highlight premium2">PREMIUM </span> И <span className="highlight premium3">DISCOUNT.</span></li>
+                        <li>ЛОГИКА РАБОТЫ <span className="highlight premium2">PREMIUM </span> И <span className="highlight premium3">DISCOUNT.</span></li>
+                        <li>ПРИМЕРЫ РАБОТЫ С <span className="highlight premium2">PREMIUM </span> И <span className="highlight premium3">DISCOUNT.</span></li>
                         <li>ДОПОЛНИТЕЛЬНЫЙ МАТЕРИАЛ ПО ТЕМЕ.</li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight premium4">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight premium4">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
                 <div className="market training-program__course-section card_4 ">
@@ -206,18 +225,18 @@ useEffect(() => {
 
                     <ul className="training-program__list">
 
-                        <li>ЧТО ТАКОЕ <span class="highlight">СТРУКТУРА РЫНКА.</span></li>
-                        <li>КАКАЯ БЫВАЕТ <span class="highlight">СТРУКТУРА РЫНКА.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">СТРУКТУРА РЫНКА.</span></li>
+                        <li>КАКАЯ БЫВАЕТ <span className="highlight">СТРУКТУРА РЫНКА.</span></li>
                         <li>ЧЕМ ХАРАКТЕРИЗУЕТСЯ КАЖДОЕ СОСТОЯНИЕ.</li>
-                        <li><span class="highlight">CHOCH</span> И ЕГО ХАРАКТЕРИСТИКА.</li>
-                        <li><span class="highlight">BOS </span> И ЕГО ХАРАКТЕРИСТИКА.</li>
-                        <li><span class="highlight">BOS </span> CONFIRMED И ЕГО ХАРАКТЕРИСТИКА.</li>
+                        <li><span className="highlight">CHOCH</span> И ЕГО ХАРАКТЕРИСТИКА.</li>
+                        <li><span className="highlight">BOS </span> И ЕГО ХАРАКТЕРИСТИКА.</li>
+                        <li><span className="highlight">BOS </span> CONFIRMED И ЕГО ХАРАКТЕРИСТИКА.</li>
                         <li>ВАРИАНТЫ СЛОМА СТРУКТУРЫ.</li>
-                        <li>ЧТО ТАКОЕ <span class="highlight">СУБСТРУКТУРА.</span></li>
-                        <li><span class="highlight">СИНХРОНИЗАЦИЯ </span>ТАЙМФРЕЙМОВ.</li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">СУБСТРУКТУРА.</span></li>
+                        <li><span className="highlight">СИНХРОНИЗАЦИЯ </span>ТАЙМФРЕЙМОВ.</li>
                         <li>ПРИМЕРЫ РАБОТЫ СО СТРУКТУРОЙ.</li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
                 <div className="this training-program__course-section card_4 ">
@@ -228,16 +247,16 @@ useEffect(() => {
                     </div>
 
                     <ul className="training-program__list">
-                        <li>ЧТО ТАКОЕ <span class="highlight">ЛИКВИДНОСТЬ.</span></li>
-                        <li>ВИДЫ <span class="highlight ">ЛИКВИДНОСТИ.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">ЛИКВИДНОСТЬ.</span></li>
+                        <li>ВИДЫ <span className="highlight ">ЛИКВИДНОСТИ.</span></li>
                         <li>ХАРАКТЕРИСТИКА КАЖДОГО ВИДА.</li>
-                        <li>ЧТО ТАКОЕ <span class="highlight">INDUCEMENT.</span></li>
-                        <li><span class="highlight this1 ">ЛИКВИДНОСТЬ</span> + СТРУКТУРА.</li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">INDUCEMENT.</span></li>
+                        <li><span className="highlight this1 ">ЛИКВИДНОСТЬ</span> + СТРУКТУРА.</li>
                         <li>ВНЕШНЯЯ ЛИКВИДНОСТЬ - ЛОГИКА.</li>
-                        <li><span class="highlight this2">ВНУТРЕННЯЯ ЛИКВИДНОСТЬ - </span>ЛОГИКА.</li>
-                        <li>ПРИМЕРЫ РАБОТЫ С <span class="highlight this3">ЛИКВИДНОСТЬЮ.</span></li>
+                        <li><span className="highlight this2">ВНУТРЕННЯЯ ЛИКВИДНОСТЬ - </span>ЛОГИКА.</li>
+                        <li>ПРИМЕРЫ РАБОТЫ С <span className="highlight this3">ЛИКВИДНОСТЬЮ.</span></li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight this4">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight this4">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
                 <div className="imbalance training-program__course-section  ">
@@ -247,19 +266,19 @@ useEffect(() => {
                     </div>
 
                     <ul className="training-program__list">
-                        <li>ЧТО ТАКОЕ <span class="highlight">IMBALANCE.</span></li>
-                        <li>ИЗ ЧЕГО СОСТОИТ <span class="highlight">IMBALANCE.</span></li>
-                        <li>ЛОГИКА РАБОТЫ <span class="highlight">IMBALANCE.</span></li>
-                        <li><span class="highlight">FVG - РАЗБОР.</span></li>
-                        <li><span class="highlight">IFVG - РАЗБОР.</span></li>
-                        <li><span class="highlight">GAP - РАЗБОР.</span></li>
-                        <li><span class="highlight">BWG+ПРОТОРГОВКА.</span></li>
-                        <li>УВАЖЕНИЕ И НЕУВАЖЕНИЕ <span class="highlight">IMBALANCE.</span></li>
-                        <li>ЧТО ТАКОЕ <span class="highlight">SHIFT.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">IMBALANCE.</span></li>
+                        <li>ИЗ ЧЕГО СОСТОИТ <span className="highlight">IMBALANCE.</span></li>
+                        <li>ЛОГИКА РАБОТЫ <span className="highlight">IMBALANCE.</span></li>
+                        <li><span className="highlight">FVG - РАЗБОР.</span></li>
+                        <li><span className="highlight">IFVG - РАЗБОР.</span></li>
+                        <li><span className="highlight">GAP - РАЗБОР.</span></li>
+                        <li><span className="highlight">BWG+ПРОТОРГОВКА.</span></li>
+                        <li>УВАЖЕНИЕ И НЕУВАЖЕНИЕ <span className="highlight">IMBALANCE.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">SHIFT.</span></li>
                         <li>ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ.</li>
-                        <li>ПРИМЕРЫ РАБОТЫ С <span class="highlight">IMBALANCE.</span></li>
+                        <li>ПРИМЕРЫ РАБОТЫ С <span className="highlight">IMBALANCE.</span></li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
                 <div className="power training-program__course-section ">
@@ -269,16 +288,16 @@ useEffect(() => {
                     </div>
 
                     <ul className="training-program__list">
-                        <li>ЧТО ТАКОЕ <span class="highlight">POI.</span></li>
-                        <li><span class="highlight">REJECTION BLOCK - РАЗБОР.</span></li>
-                        <li><span class="highlight">ORDER BLOCK - РАЗБОР.</span></li>
-                        <li><span class="highlight">BREAKER BLOCK - РАЗБОР.</span></li>
-                        <li><span class="highlight">MITIGATION BLOCK - РАЗБОР.</span></li>
-                        <li>УВАЖЕНИЕ И НЕУВАЖЕНИЕ <span class="highlight blok1">БЛОКОВ.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">POI.</span></li>
+                        <li><span className="highlight">REJECTION BLOCK - РАЗБОР.</span></li>
+                        <li><span className="highlight">ORDER BLOCK - РАЗБОР.</span></li>
+                        <li><span className="highlight">BREAKER BLOCK - РАЗБОР.</span></li>
+                        <li><span className="highlight">MITIGATION BLOCK - РАЗБОР.</span></li>
+                        <li>УВАЖЕНИЕ И НЕУВАЖЕНИЕ <span className="highlight blok1">БЛОКОВ.</span></li>
                         <li>ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ.</li>
-                        <li>ПРИМЕРЫ РАБОТЫ С <span class="highlight blok2">БЛОКАМИ.</span></li>
+                        <li>ПРИМЕРЫ РАБОТЫ С <span className="highlight blok2">БЛОКАМИ.</span></li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight blok3">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight blok3">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
 
@@ -290,15 +309,15 @@ useEffect(() => {
                     </div>
 
                     <ul className="training-program__list">
-                        <li>ЧТО ТАКОЕ <span class="highlight">ДОСТАВКА ЦЕНЫ.</span></li>
-                        <li>НЕПРАВИЛЬНЫЙ <span class="highlight">ПОТОК ПРИКАЗОВ.</span></li>
-                        <li><span class="highlight">АГРЕССИВНАЯ</span>  ДОСТАВКА.</li>
-                        <li>ПРАВИЛЬНЫЙ<span class="highlight"> ПОТОК ПРИКАЗОВ.</span></li>
-                        <li>ДОСТАВКА <span class="highlight">+ POI + СТРУКТУРА + LIQ.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">ДОСТАВКА ЦЕНЫ.</span></li>
+                        <li>НЕПРАВИЛЬНЫЙ <span className="highlight">ПОТОК ПРИКАЗОВ.</span></li>
+                        <li><span className="highlight">АГРЕССИВНАЯ</span>  ДОСТАВКА.</li>
+                        <li>ПРАВИЛЬНЫЙ<span className="highlight"> ПОТОК ПРИКАЗОВ.</span></li>
+                        <li>ДОСТАВКА <span className="highlight">+ POI + СТРУКТУРА + LIQ.</span></li>
                         <li>ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ.</li>
-                        <li>ПРИМЕРЫ РАБОТЫ С <span class="highlight">ДОСТАВКОЙ ЦЕНЫ.</span></li>
+                        <li>ПРИМЕРЫ РАБОТЫ С <span className="highlight">ДОСТАВКОЙ ЦЕНЫ.</span></li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
                 <div className="smr training-program__course-section card_4 ">
@@ -309,14 +328,14 @@ useEffect(() => {
                     </div>
 
                     <ul className="training-program__list">
-                        <li>ЧТО ТАКОЕ <span class="highlight">SMR.</span></li>
-                        <li>КАК ОПРЕДЕЛИТЬ <span class="highlight">SMR.</span></li>
-                        <li>ЧТО ТАКОЕ <span class="highlight">AMD.</span></li>
-                        <li>ИДЕНТИФИКАЦИЯ <span class="highlight">AMD.</span></li>
-                        <li>ПРИМЕРЫ РАБОТЫ С <span class="highlight smr1">SMR И AMD.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">SMR.</span></li>
+                        <li>КАК ОПРЕДЕЛИТЬ <span className="highlight">SMR.</span></li>
+                        <li>ЧТО ТАКОЕ <span className="highlight">AMD.</span></li>
+                        <li>ИДЕНТИФИКАЦИЯ <span className="highlight">AMD.</span></li>
+                        <li>ПРИМЕРЫ РАБОТЫ С <span className="highlight smr1">SMR И AMD.</span></li>
                         <li>ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ.</li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight smr2">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight smr2">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
                 <div className="correlation training-program__course-section ">
@@ -327,15 +346,15 @@ useEffect(() => {
                     </div>
                     <ul className="training-program__list">
                         <li>РАЗБОРЫ ИНДЕКСОВ.</li>
-                        <li><span class="highlight">POSITIVE </span>CORRELATION.</li>
-                        <li>NEGATIVE<span class="highlight"> CORRELATION.</span></li>
-                        <li>КАК ПРИМЕНЯТЬ <span class="highlight">CORRELATION.</span></li>
-                        <li>ВАЖНОЕ УТОЧНЕНИЕ ПО <span class="highlight">CORRELATION.</span></li>
-                        <li>РЕЙТИНГ <span class="highlight">ИНСТРУМЕНТОВ </span>ДЛЯ ТОРГОВЛИ.</li>
-                        <li><span class="highlight">ТОРГОВЫЕ СЕССИИ.</span></li>
-                        <li><span class="highlight">KILL ZONE.</span></li>
+                        <li><span className="highlight">POSITIVE </span>CORRELATION.</li>
+                        <li>NEGATIVE<span className="highlight"> CORRELATION.</span></li>
+                        <li>КАК ПРИМЕНЯТЬ <span className="highlight">CORRELATION.</span></li>
+                        <li>ВАЖНОЕ УТОЧНЕНИЕ ПО <span className="highlight">CORRELATION.</span></li>
+                        <li>РЕЙТИНГ <span className="highlight">ИНСТРУМЕНТОВ </span>ДЛЯ ТОРГОВЛИ.</li>
+                        <li><span className="highlight">ТОРГОВЫЕ СЕССИИ.</span></li>
+                        <li><span className="highlight">KILL ZONE.</span></li>
                         <li>ЦЕНА + ВРЕМЯ ДЛЯ <span className="highlight">ТОРГОВЛИ.</span></li>
-                        <li>ПРИМЕРЫ РАБОТЫ <span class="highlight">CORRELATION.</span></li>
+                        <li>ПРИМЕРЫ РАБОТЫ <span className="highlight">CORRELATION.</span></li>
                         <li>ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ.</li>
                         <li> <span className="highlight">РАЗБОРЫ</span> НА ГРАФИКЕ.</li>
                     </ul>
@@ -347,16 +366,16 @@ useEffect(() => {
                         <img src="/images/фото-8.png" alt="Who is" />
                     </div>
                     <ul className="training-program__list">
-                        <li>ЧТО ТАКОЕ <span class="highlight model1">МОДЕЛЬ ВХОДА.</span></li>
-                        <li>ТАЙМФРЕЙМЫ ДЛЯ<span class="highlight model1"> МОДЕЛЕЙ ВХОДА.</span></li>
-                        <li><span class="highlight">ПРАВИЛА </span>МОДЕЛИ ВХОДА.</li>
+                        <li>ЧТО ТАКОЕ <span className="highlight model1">МОДЕЛЬ ВХОДА.</span></li>
+                        <li>ТАЙМФРЕЙМЫ ДЛЯ<span className="highlight model1"> МОДЕЛЕЙ ВХОДА.</span></li>
+                        <li><span className="highlight">ПРАВИЛА </span>МОДЕЛИ ВХОДА.</li>
                         <li>МОДЕЛИ ВХОДА.</li>
-                        <li><span class="highlight">СВИП МОДЕЛИ + </span>ПЕРЕЗАХОД.</li>
-                        <li>ЧТО МОЖНО БРАТЬ ЗА <span class="highlight">ЦЕЛИ.</span></li>
-                        <li>ПРИМЕРЫ РАБОТЫ С <span class="highlight model2">МОДЕЛЯМИ </span>И <span class="highlight">ЦЕЛЯМИ.</span> </li>
+                        <li><span className="highlight">СВИП МОДЕЛИ + </span>ПЕРЕЗАХОД.</li>
+                        <li>ЧТО МОЖНО БРАТЬ ЗА <span className="highlight">ЦЕЛИ.</span></li>
+                        <li>ПРИМЕРЫ РАБОТЫ С <span className="highlight model2">МОДЕЛЯМИ </span>И <span className="highlight">ЦЕЛЯМИ.</span> </li>
                         <li>ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ.</li>
                         <li>РАЗБОРЫ НА ГРАФИКЕ.</li>
-                        <li>ДОМАШНЕЕ <span class="highlight model3">ЗАДАНИЕ.</span></li>
+                        <li>ДОМАШНЕЕ <span className="highlight model3">ЗАДАНИЕ.</span></li>
                     </ul>
                 </div>
                 <div className="indicators training-program__course-section card_4 ">
@@ -461,7 +480,8 @@ useEffect(() => {
                             {usdPrice !== null ? usdPrice : '—'} <span>$</span>
                         </h3>
                     </div>
-                </div>                <div ref={startRef} className="nout_card">
+                </div>
+                <div ref={startRef} className="nout_card">
                     <img src="/images/nout x.png" alt="Rasm kelmadi" />
                     <div className="card1">
                         <p>Чтобы приобрести доступ к <span> обучающим материалам,</span> <br />

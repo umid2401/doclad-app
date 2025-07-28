@@ -8,17 +8,13 @@
     font-family: "Rimma";
     src: url("../../public/rimma-sans-bold.ttf");
 }
-html, body {
+body {
   margin: 0;
   padding: 0;
-  overflow: scroll ;
+  overflow: auto ;
   height: 100%;
-  scrollbar-width: none;           /* Firefox */
-  -ms-overflow-style: none;        /* Internet Explorer, Edge Legacy */
 }
-body::-webkit-scrollbar {
-  display: none;                   /* Chrome, Safari, Opera */
-}
+
 
 .main_section {
     max-width: 480px;
