@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import "../styles/SmartSlider.css"
+import { useBodyHtml } from './useBodyHtml';
 function SmartMoneySlider() {
   useEffect(() => {
     const setAppHeight = () => {
@@ -19,7 +20,6 @@ function SmartMoneySlider() {
     console.log("salom")
     sectionTwoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-
   return (
     <main className='main_section'>
       <section className="section_one section">

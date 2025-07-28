@@ -1,0 +1,12 @@
+/* Hamma joyga taalluqli emas — faqat class qo‘shilgan sahifalarda ishlaydi */
+.scroll-hidden-body {
+  overflow: scroll !important;
+  height: 100%;
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none;      /* IE va Edge */
+
+  /* Webkit (Chrome, Safari) uchun scroll barni yashirish */
+}
+.scroll-hidden-body::-webkit-scrollbar {
+  display: none;
+}

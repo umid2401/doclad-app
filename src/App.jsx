@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import MainLayout from "./layouts/MainLayout"
 import TrainLayout from "./layouts/TrainLayout"
 import { useEffect } from "react";
+import './styles/global.css';
 import { init, isTMA, viewport } from "@telegram-apps/sdk";
 import ScrollToTop from "./components/ScrollToTop";
 const useTelegram = () => {
@@ -26,11 +27,12 @@ const useTelegram = () => {
 };
 function App() {
   useTelegram()
-
+  
   return (
     
      <BrowserRouter>
       <ScrollToTop />
+      
       <Routes>
         <Route path="/" element={<MainLayout />} />
         <Route path="/courses" element={<TrainLayout />} />

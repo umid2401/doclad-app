@@ -8,12 +8,14 @@
     font-family: "Rimma";
     src: url("../../public/rimma-sans-bold.ttf");
 }
-body {
+/* html, body {
   margin: 0;
   padding: 0;
-  overflow: auto ;
+  overflow: scroll ;
   height: 100%;
-}
+  scrollbar-width: none;           
+  -ms-overflow-style: none;        
+} */
 
 
 .main_section {
