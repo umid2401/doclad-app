@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout"
 import TrainLayout from "./layouts/TrainLayout"
 import { useEffect } from "react";
 import { init, isTMA, viewport } from "@telegram-apps/sdk";
+import ScrollToTop from "./components/ScrollToTop";
 const useTelegram = () => {
   useEffect(() => {
     const initTg = async () => {
@@ -27,10 +28,14 @@ function App() {
   useTelegram()
 
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout/>}/>
-      <Route path="/courses" element={<TrainLayout/>}/>
-    </Routes>
+    
+     <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<MainLayout />} />
+        <Route path="/courses" element={<TrainLayout />} />
+      </Routes>
+    </>
   )
 }
 
