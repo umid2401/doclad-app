@@ -4,6 +4,7 @@
   height: 100%;
   scrollbar-width: none;         /* Firefox */
   -ms-overflow-style: none;      /* IE va Edge */
+  
 
   /* Webkit (Chrome, Safari) uchun scroll barni yashirish */
 }

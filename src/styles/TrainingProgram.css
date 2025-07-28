@@ -17,7 +17,7 @@
   background-color: #0A0A0A;
   width: 100%;
   margin: 0 auto;
-  height: 60dvh;
+  height: 400px;
   background: url("/images/фоновые\ крастинки.png"), url("/images/верз\ свет\ свет.png"),
     url("/images/низ\ свет.png");
   background-size: cover, 100%, 100%;
@@ -28,7 +28,11 @@
   align-items: center;
   justify-content: flex-start;
   position: relative;
+       /* IE va Edge */
 
+}
+body{
+  overflow: scroll !important;
 }
 
 .training-program__nav {
@@ -127,14 +131,14 @@
   transition: transform 0.25s ease-out;
 }
 
-.training-program__hero .scrolled .training-program__text {
+/* .training-program__hero .scrolled .training-program__text {
   transform: scale(1);
   position: relative;
-}
+} */
 
-.training-program__hero .scrolled .training-program-img {
+/* .training-program__hero .scrolled .training-program-img {
   transform: translateY(-40px);
-}
+} */
 
 .training-program-img {
   position: absolute;

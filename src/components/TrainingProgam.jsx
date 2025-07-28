@@ -124,9 +124,7 @@ const TrainingProgram = () => {
         moveBackground(current);
       }
 
-      if (containerRef.current) {
-        containerRef.current.classList.toggle("scrolled", window.scrollY > 10);
-      }
+     
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
