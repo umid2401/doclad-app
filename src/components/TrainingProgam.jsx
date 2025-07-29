@@ -167,7 +167,7 @@ const TrainingProgram = () => {
                     <div ref={textRef} className="training-program__text">
                         <h1 className="training-program__title">ПРОГРАММА <span>ОБУЧЕНИЯ</span></h1>
                         <p className="training-program__description">
-                            Полная информация об <br /> основных инструментах <br /> <span>Smart Money-концепции:</span> <br /> их механика, логика работы и<br /> правильное применение в <br /> анализе
+                            Полная информация об <br /> основных инструментах <br /> <span>Smart Money-концепции:</span> <br /> их механика, логика работы  <br /> и правильное применение <br /> в  анализе
                         </p>
                     </div>
                     <div className="training-program-img">
